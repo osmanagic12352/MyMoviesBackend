@@ -5,9 +5,8 @@ using System.Threading.Tasks;
 
 namespace MyMoviesBackend.Models.ViewModels
 {
-    public class LoginView
+    public class UsersListsView
     {
-        public string Email { get; set; }
-        public string Password { get; set; }
+        public string ListName { get; set; }
     }
 }

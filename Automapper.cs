@@ -15,8 +15,14 @@ namespace MyMoviesBackend
             CreateMap<AppUserView, AppUser>()
                 .ForMember(dest => dest.PasswordHash, opt => opt.MapFrom(src => src.Password));
 
-            CreateMap<LoginView, AppUser>()
+            CreateMap<Login, AppUser>()
                 .ForMember(dest => dest.PasswordHash, opt => opt.MapFrom(src => src.Password));
+
+            CreateMap<UsersMoviesView, UsersMovies>();
+
+            CreateMap<UsersListsView, UsersLists>();
+
+            CreateMap<MoviesView, Movies>();
         }
     }
 }

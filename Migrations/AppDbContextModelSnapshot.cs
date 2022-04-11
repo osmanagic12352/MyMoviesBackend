@@ -254,6 +254,9 @@ namespace MyMoviesBackend.Migrations
                     b.Property<string>("ImdbId")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("ImdbRating")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Plot")
                         .HasColumnType("nvarchar(max)");
 
@@ -263,10 +266,10 @@ namespace MyMoviesBackend.Migrations
                     b.Property<string>("Released")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Title")
+                    b.Property<string>("Runtime")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("imdbRating")
+                    b.Property<string>("Title")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -326,12 +329,6 @@ namespace MyMoviesBackend.Migrations
                     b.Property<string>("Genre")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("ImdbId")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ImdbRating")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Plot")
                         .HasColumnType("nvarchar(max)");
 
@@ -339,6 +336,9 @@ namespace MyMoviesBackend.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Released")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Runtime")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Title")

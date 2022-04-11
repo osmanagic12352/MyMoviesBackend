@@ -16,7 +16,8 @@ namespace MyMoviesBackend.Models
         public string Plot { get; set; }
         public string Released { get; set; }
         public string Genre { get; set; }
-        public string imdbRating { get; set; }
+        public string Runtime { get; set; }
+        public string ImdbRating { get; set; }
 
         //Relacija N:N - u više lista, više filmova 
         public List<UsersLists_Movies> UsersLists_Movies { get; set; }
