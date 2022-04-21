@@ -56,7 +56,7 @@ namespace MyMoviesBackend.Controllers
                 };
                 _context.DbUsersLists.Add(_list);
                 _context.SaveChanges();
-                return Ok("Success");
+                return Ok();
             }
             else
             {
