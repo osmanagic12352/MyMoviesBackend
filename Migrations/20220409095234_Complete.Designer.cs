@@ -10,8 +10,8 @@ using MyMoviesBackend.Models;
 namespace MyMoviesBackend.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20220407195755_Migration1")]
-    partial class Migration1
+    [Migration("20220409095234_Complete")]
+    partial class Complete
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -256,6 +256,9 @@ namespace MyMoviesBackend.Migrations
                     b.Property<string>("ImdbId")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("ImdbRating")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Plot")
                         .HasColumnType("nvarchar(max)");
 
@@ -265,10 +268,10 @@ namespace MyMoviesBackend.Migrations
                     b.Property<string>("Released")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Title")
+                    b.Property<string>("Runtime")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("imdbRating")
+                    b.Property<string>("Title")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -328,12 +331,6 @@ namespace MyMoviesBackend.Migrations
                     b.Property<string>("Genre")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("ImdbId")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ImdbRating")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Plot")
                         .HasColumnType("nvarchar(max)");
 
@@ -341,6 +338,9 @@ namespace MyMoviesBackend.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Released")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Runtime")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Title")

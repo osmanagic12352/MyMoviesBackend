@@ -1,10 +1,15 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
 using MyMoviesBackend.Models;
 using MyMoviesBackend.Models.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using System.Security.Claims;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace MyMoviesBackend.Controllers.Service
@@ -24,6 +29,46 @@ namespace MyMoviesBackend.Controllers.Service
             _mapper = mapper;
             _context = context;
         }
+
+        //public async Task Login([FromBody] Login login)
+        //{
+        //    var UserCheck = await _userManager.FindByNameAsync(login.Email);
+        //    if (UserCheck != null && await _userManager.CheckPasswordAsync(UserCheck, login.Password))
+        //    {
+        //        var userRoles = await _userManager.GetRolesAsync(UserCheck);
+        //        IdentityOptions _options = new IdentityOptions();
+
+        //        var authClaims = new List<Claim>
+        //        {
+        //            new Claim(ClaimTypes.Name, UserCheck.UserName),
+        //            new Claim("UserID", UserCheck.Id.ToString()),
+        //            new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+        //            new Claim(_options.ClaimsIdentity.RoleClaimType,userRoles.FirstOrDefault())
+        //        };
+
+
+        //        foreach (var userRole in userRoles)
+        //        {
+        //            authClaims.Add(new Claim(ClaimTypes.Role, userRole));
+        //        }
+
+        //        var LoginKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("CryptoBanking123"));
+
+        //        var TokenSettings = new JwtSecurityToken(
+        //            issuer: "https://localhost:5001",
+        //            audience: "https://localhost:5001",
+        //            expires: DateTime.Now.AddHours(5),
+        //            claims: authClaims,
+        //            signingCredentials: new SigningCredentials(LoginKey, SecurityAlgorithms.HmacSha256)
+        //            );
+
+        //        return Ok(new { token = new JwtSecurityTokenHandler().WriteToken(TokenSettings) });
+        //    }
+        //    else
+        //    {
+        //        throw new Exception("Neuspjela prijava! (Da li ste upisali dobro svoje korisničke podatke?)");
+        //    }
+        //}
 
 
         public async Task InsertUser(AppUserView userView)
@@ -81,7 +126,7 @@ namespace MyMoviesBackend.Controllers.Service
             {
                 UserName = adminView.UserName,
                 Email = adminView.Email,
-                FullName = adminView.FullName,
+                FullName = adminView.FullName,               
                 SecurityStamp = Guid.NewGuid().ToString()
             };
 
@@ -98,11 +143,54 @@ namespace MyMoviesBackend.Controllers.Service
             if (await _roleManager.RoleExistsAsync(Roles.Admin))
                 await _userManager.AddToRoleAsync(admin, Roles.Admin);
 
-        }
+        }    
+
         public List<AppUser> GetAllUsers()
         {
             var allUsers = _context.DbUsers.ToList();
             return allUsers;
         }
+
+        public AppUser GetUserById(int Id)
+        {
+            var GetUser = _context.DbUsers.FirstOrDefault(n => n.Id == Id);
+            return GetUser;
+        }
+
+        public AppUser UpdateUserById(int Id, AppUserView userView)
+        {
+            var _user = _context.DbUsers.FirstOrDefault(n => n.Id == Id);
+            if (_user != null)
+            {
+                _user.UserName = userView.UserName;
+                _user.Email = userView.Email;
+                _user.FullName = userView.FullName;
+                _user.PasswordHash = userView.Password;
+
+                _mapper.Map(userView, _user);
+                _context.SaveChanges();
+                return _user;
+            }
+            else
+            {
+                throw new Exception("Greška! Niste unjeli dobar Id usera?");
+            }
+        }
+
+        public void DeleteUserById(int id)
+        {
+            var _user = _context.DbUsers.FirstOrDefault(n => n.Id == id);
+            if (_user != null)
+            {
+                _context.DbUsers.Remove(_user);
+                _context.SaveChanges();
+            }
+            else
+            {
+                throw new Exception("Brisanje korisnika nije uspjelo!");
+            }
+        }
+
+        
     }
 }

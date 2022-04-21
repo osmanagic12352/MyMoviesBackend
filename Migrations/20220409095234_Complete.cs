@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace MyMoviesBackend.Migrations
 {
-    public partial class Migration1 : Migration
+    public partial class Complete : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -61,7 +61,8 @@ namespace MyMoviesBackend.Migrations
                     Plot = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Released = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Genre = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    imdbRating = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Runtime = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ImdbRating = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -201,12 +202,11 @@ namespace MyMoviesBackend.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Title = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ImdbId = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Poster = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Plot = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Released = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Runtime = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Genre = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ImdbRating = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     UserId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>

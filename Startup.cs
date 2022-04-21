@@ -59,9 +59,9 @@ namespace WebApplication1
                     ValidateIssuer = true,
                     ValidateAudience = true,
 
-                    ValidIssuer = "https://localhost:5001",
-                    ValidAudience = "https://localhost:5001",
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("MyMovies123"))
+                    ValidIssuer = "https://localhost:5002",
+                    ValidAudience = "https://localhost:5002",
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("MyMoviesSecretKey123"))
                 };
             });
 
