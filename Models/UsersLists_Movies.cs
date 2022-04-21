@@ -15,6 +15,6 @@ namespace MyMoviesBackend.Models
         public UsersLists List { get; set; }
         public int ListId { get; set; }  
         public Movies Movies { get; set; }
-        public int MovieId { get; set; }
+        public string ImdbId { get; set; }
     }
 }

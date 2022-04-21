@@ -20,9 +20,9 @@ namespace MyMoviesBackend.Controllers.Service
             _mapper = mapper;
         }
 
-        public List<UsersMovies> GetAllUsersLists()
+        public List<UsersLists> GetAllUsersLists()
         {
-            var allLists = _context.DbUsersMovies.ToList();
+            var allLists = _context.DbUsersLists.ToList();
             return allLists;
         }
 

@@ -18,34 +18,26 @@ namespace MyMoviesBackend.Controllers
     [ApiController]
     public class MoviesController : ControllerBase
     {
-        private readonly UserManager<AppUser> _userManager;
-        private AppDbContext _context;
-        private readonly IMapper _mapper;
         public MoviesService _movie;
         private readonly ILogger<MoviesController> _logger;
 
         public MoviesController(
-            UserManager<AppUser> userManager,
-            AppDbContext context,
             MoviesService movies,
-            IMapper mapper,
             ILogger<MoviesController> logger)
         {
-            _userManager = userManager;
-            _context = context;
-            _mapper = mapper;
             _movie = movies;
             _logger = logger;
         }
 
-        [Authorize]
-        [HttpPost("addMovie")]
+
+        [HttpPost]
+        [Route("addMovie")]
         public IActionResult AddMovie(MoviesView movie)
         {
             try 
             {
                 _movie.AddMovie(movie);
-                return Ok("Success");
+                return Ok();
             }
             catch (Exception ex)
             {
@@ -67,7 +59,7 @@ namespace MyMoviesBackend.Controllers
         [Authorize]
         [HttpPut]
         [Route("editMovie_ById/{id}")]
-        public IActionResult UpdateMovieById(int id, [FromBody] MoviesView movie)
+        public IActionResult UpdateMovieById(string id, [FromBody] MoviesView movie)
         {
             try
             {
@@ -85,7 +77,7 @@ namespace MyMoviesBackend.Controllers
         [Authorize]
         [HttpDelete]
         [Route("deleteMovie_ById/{id}")]
-        public IActionResult DeleteMovieById(int id)
+        public IActionResult DeleteMovieById(string id)
         {
             try
             {

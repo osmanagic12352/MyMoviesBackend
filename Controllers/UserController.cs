@@ -22,9 +22,8 @@ namespace MyMoviesBackend.Controllers
     public class UserController : ControllerBase
     {
 
-        private readonly UserManager<AppUser> _userManager;
-        private readonly RoleManager<IdentityRole<int>> _roleManager;
         private readonly ILogger<UserController> _logger;
+        private readonly UserManager<AppUser> _userManager;
         private IPasswordHasher<AppUser> _passwordHasher;
         public UserService _user;
 
@@ -36,55 +35,13 @@ namespace MyMoviesBackend.Controllers
             UserService user,
             RoleManager<IdentityRole<int>> roleManager)
         {
-            _userManager = userManager;
             _logger = logger;
             _passwordHasher = passwordHash;
             _user = user;
-            _roleManager = roleManager;
+            _userManager = userManager;
         }
 
-        [HttpPost]
-        [Route("login")]
-        public async Task<IActionResult> Login([FromBody] Login login)
-        {
-            var UserCheck = await _userManager.FindByNameAsync(login.Email);
-            if (UserCheck != null && await _userManager.CheckPasswordAsync(UserCheck, login.Password))
-            {
-                var userRoles = await _userManager.GetRolesAsync(UserCheck);
-                IdentityOptions _options = new IdentityOptions();
-
-                var authClaims = new List<Claim>
-                {
-                    new Claim(ClaimTypes.Name, UserCheck.UserName),
-                    new Claim("UserID", UserCheck.Id.ToString()),
-                    new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-                    new Claim(_options.ClaimsIdentity.RoleClaimType,userRoles.FirstOrDefault())
-                };
-
-
-                foreach (var userRole in userRoles)
-                {
-                    authClaims.Add(new Claim(ClaimTypes.Role, userRole));
-                }
-
-                var LoginKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("MyMoviesSecretKey123"));
-
-                var TokenSettings = new JwtSecurityToken(
-                    issuer: "https://localhost:5002",
-                    audience: "https://localhost:5002",
-                    expires: DateTime.Now.AddHours(5),
-                    claims: authClaims,
-                    signingCredentials: new SigningCredentials(LoginKey, SecurityAlgorithms.HmacSha256)
-                    );
-
-                return Ok(new { token = new JwtSecurityTokenHandler().WriteToken(TokenSettings) });
-            }
-            else
-            {
-                throw new Exception("Neuspjela prijava! (Da li ste upisali dobro svoje korisničke podatke?)");
-            }
-        }
-
+        
         [HttpPost]
         [Route("registerUser")]
         public async Task<IActionResult> InsertUser([FromBody] AppUserView userView)
@@ -128,6 +85,20 @@ namespace MyMoviesBackend.Controllers
             return Ok(allUsers);
         }
 
+        [Authorize]
+        [HttpGet("getLogedUser")]
+        public async Task<Object> GetLogedUser()
+        {
+            string userId = User.Claims.First(a => a.Type == "UserID").Value;
+            var user = await _userManager.FindByIdAsync(userId);
+            return new
+            {
+                user.Id,
+                user.Email,
+                user.UserName,
+                user.FullName
+            };
+        }
 
         [Authorize(Roles = "Admin")]
         [HttpGet]

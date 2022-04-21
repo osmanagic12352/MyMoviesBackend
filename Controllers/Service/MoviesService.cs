@@ -28,11 +28,11 @@ namespace MyMoviesBackend.Controllers.Service
             var _movie = _mapper.Map<Movies>(movie);
             _movie = new Movies()
             {
+                ImdbId = movie.ImdbId,
                 Title = movie.Title,
                 Poster = movie.Poster,
                 Released = movie.Released,
                 Runtime = movie.Runtime,
-                ImdbId = movie.ImdbId,
                 ImdbRating = movie.ImdbRating
             };
             try
@@ -52,9 +52,9 @@ namespace MyMoviesBackend.Controllers.Service
             return allMovies;
         }
 
-        public Movies UpdateMovieById(int Id, MoviesView movieView)
+        public Movies UpdateMovieById(string Id, MoviesView movieView)
         {
-            var _movie = _context.DbMovies.FirstOrDefault(n => n.Id == Id);
+            var _movie = _context.DbMovies.FirstOrDefault(n => n.ImdbId == Id);
             if (_movie != null)
             {
                 _movie.Title = movieView.Title;
@@ -72,9 +72,9 @@ namespace MyMoviesBackend.Controllers.Service
             }
         }
 
-        public void DeleteMovieById(int id)
+        public void DeleteMovieById(string id)
         {
-            var _movie = _context.DbMovies.FirstOrDefault(n => n.Id == id);
+            var _movie = _context.DbMovies.FirstOrDefault(n => n.ImdbId == id);
             if (_movie != null)
             {
                 _context.DbMovies.Remove(_movie);

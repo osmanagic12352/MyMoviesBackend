@@ -53,10 +53,8 @@ namespace MyMoviesBackend.Migrations
                 name: "DbMovies",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ImdbId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Title = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ImdbId = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Poster = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Plot = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Released = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -66,7 +64,7 @@ namespace MyMoviesBackend.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_DbMovies", x => x.Id);
+                    table.PrimaryKey("PK_DbMovies", x => x.ImdbId);
                 });
 
             migrationBuilder.CreateTable(
@@ -226,7 +224,7 @@ namespace MyMoviesBackend.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    MovieId = table.Column<int>(type: "int", nullable: false),
+                    ImdbId = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     UserId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -239,10 +237,10 @@ namespace MyMoviesBackend.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_DbFavorite_DbMovies_MovieId",
-                        column: x => x.MovieId,
+                        name: "FK_DbFavorite_DbMovies_ImdbId",
+                        column: x => x.ImdbId,
                         principalTable: "DbMovies",
-                        principalColumn: "Id",
+                        principalColumn: "ImdbId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -253,16 +251,16 @@ namespace MyMoviesBackend.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     ListId = table.Column<int>(type: "int", nullable: false),
-                    MovieId = table.Column<int>(type: "int", nullable: false)
+                    ImdbId = table.Column<string>(type: "nvarchar(450)", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_DbUsersLists_Movies", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_DbUsersLists_Movies_DbMovies_MovieId",
-                        column: x => x.MovieId,
+                        name: "FK_DbUsersLists_Movies_DbMovies_ImdbId",
+                        column: x => x.ImdbId,
                         principalTable: "DbMovies",
-                        principalColumn: "Id",
+                        principalColumn: "ImdbId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_DbUsersLists_Movies_DbUsersLists_ListId",
@@ -312,9 +310,9 @@ namespace MyMoviesBackend.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_DbFavorite_MovieId",
+                name: "IX_DbFavorite_ImdbId",
                 table: "DbFavorite",
-                column: "MovieId");
+                column: "ImdbId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_DbFavorite_UserId",
@@ -327,14 +325,14 @@ namespace MyMoviesBackend.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_DbUsersLists_Movies_ImdbId",
+                table: "DbUsersLists_Movies",
+                column: "ImdbId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_DbUsersLists_Movies_ListId",
                 table: "DbUsersLists_Movies",
                 column: "ListId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_DbUsersLists_Movies_MovieId",
-                table: "DbUsersLists_Movies",
-                column: "MovieId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_DbUsersMovies_UserId",

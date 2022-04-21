@@ -13,7 +13,7 @@ namespace MyMoviesBackend.Models
 
         //Relacija N:N - više filmova, od više usera, u favoritima        
         public Movies Movies { get; set; }
-        public int MovieId { get; set; }      
+        public string ImdbId { get; set; }      
         public AppUser User { get; set; }
         public int UserId { get; set; }
     }
