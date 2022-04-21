@@ -226,15 +226,15 @@ namespace MyMoviesBackend.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("MovieId")
-                        .HasColumnType("int");
+                    b.Property<string>("ImdbId")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<int>("UserId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("MovieId");
+                    b.HasIndex("ImdbId");
 
                     b.HasIndex("UserId");
 
@@ -243,15 +243,10 @@ namespace MyMoviesBackend.Migrations
 
             modelBuilder.Entity("MyMoviesBackend.Models.Movies", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    b.Property<string>("ImdbId")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Genre")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ImdbId")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ImdbRating")
@@ -272,7 +267,7 @@ namespace MyMoviesBackend.Migrations
                     b.Property<string>("Title")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Id");
+                    b.HasKey("ImdbId");
 
                     b.ToTable("DbMovies");
                 });
@@ -304,17 +299,17 @@ namespace MyMoviesBackend.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("ListId")
-                        .HasColumnType("int");
+                    b.Property<string>("ImdbId")
+                        .HasColumnType("nvarchar(450)");
 
-                    b.Property<int>("MovieId")
+                    b.Property<int>("ListId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ListId");
+                    b.HasIndex("ImdbId");
 
-                    b.HasIndex("MovieId");
+                    b.HasIndex("ListId");
 
                     b.ToTable("DbUsersLists_Movies");
                 });
@@ -409,9 +404,8 @@ namespace MyMoviesBackend.Migrations
                 {
                     b.HasOne("MyMoviesBackend.Models.Movies", "Movies")
                         .WithMany("Favorites")
-                        .HasForeignKey("MovieId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ImdbId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("MyMoviesBackend.Models.AppUser", "User")
                         .WithMany("Favorites")
@@ -437,15 +431,14 @@ namespace MyMoviesBackend.Migrations
 
             modelBuilder.Entity("MyMoviesBackend.Models.UsersLists_Movies", b =>
                 {
+                    b.HasOne("MyMoviesBackend.Models.Movies", "Movies")
+                        .WithMany("UsersLists_Movies")
+                        .HasForeignKey("ImdbId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
                     b.HasOne("MyMoviesBackend.Models.UsersLists", "List")
                         .WithMany("UsersLists_Movies")
                         .HasForeignKey("ListId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("MyMoviesBackend.Models.Movies", "Movies")
-                        .WithMany("UsersLists_Movies")
-                        .HasForeignKey("MovieId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

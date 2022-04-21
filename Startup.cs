@@ -37,6 +37,11 @@ namespace WebApplication1
             services.AddControllers();
 
             services.AddTransient<UserService>();
+            services.AddTransient<MoviesService>();
+            services.AddTransient<UsersListsMoviesService>();
+            services.AddTransient<UsersListsService>();
+            services.AddTransient<UsersMoviesService>();
+            services.AddTransient<FavoriteService>();
 
             services.AddDbContext<AppDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("AppData")));
 

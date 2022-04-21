@@ -7,8 +7,8 @@ namespace MyMoviesBackend.Models.ViewModels
 {
     public class MoviesView
     {
-        public string Title { get; set; }
         public string ImdbId { get; set; }
+        public string Title { get; set; }
         public string Poster { get; set; }
         public string Released { get; set; }
         public string Runtime { get; set; }

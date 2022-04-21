@@ -44,7 +44,7 @@ namespace MyMoviesBackend.Models
             builder.Entity<UsersLists_Movies>()
                 .HasOne(b => b.Movies)
                 .WithMany(ba => ba.UsersLists_Movies)
-                .HasForeignKey(bi => bi.MovieId)
+                .HasForeignKey(bi => bi.ImdbId)
                 .OnDelete(DeleteBehavior.Cascade);
 
             //Relacija N:N - više filmova, od više usera, u favoritima 
@@ -58,7 +58,7 @@ namespace MyMoviesBackend.Models
             builder.Entity<Favorite>()
                 .HasOne(b => b.Movies)
                 .WithMany(ba => ba.Favorites)
-                .HasForeignKey(bi => bi.MovieId)
+                .HasForeignKey(bi => bi.ImdbId)
                 .OnDelete(DeleteBehavior.Cascade);
         }
 

@@ -69,7 +69,7 @@ namespace MyMoviesBackend.Controllers
         public async Task<IActionResult> GetUsersLists()
         {
             var userId = User.Claims.First(a => a.Type == "UserID").Value;
-            var usersL = await _context.DbUsersMovies.Where(n => n.UserId == Int32.Parse(userId)).ToListAsync();
+            var usersL = await _context.DbUsersLists.Where(n => n.UserId == Int32.Parse(userId)).ToListAsync();
             return Ok(usersL);
         }
 

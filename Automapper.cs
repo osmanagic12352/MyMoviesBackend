@@ -23,6 +23,8 @@ namespace MyMoviesBackend
             CreateMap<UsersListsView, UsersLists>();
 
             CreateMap<MoviesView, Movies>();
+
+            CreateMap<FavoriteView, Favorite>();
         }
     }
 }
