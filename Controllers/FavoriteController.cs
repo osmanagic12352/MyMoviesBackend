@@ -75,20 +75,20 @@ namespace MyMoviesBackend.Controllers
 
         [Authorize]
         [HttpGet("getUsersFavorite")]
-        public async Task<FavoriteView> GetUsersFavoriteMovies()
+        public async Task<IActionResult> GetUsersFavoriteMovies()
         {
             string userId = User.Claims.First(a => a.Type == "UserID").Value;
             var user = await _context.DbUsers.Where(n => n.Id == Int32.Parse(userId)).Select(movies => new FavoriteView()
 
             {
-                ImdbId = movies.Favorites.Select(n => n.ImdbId).ToList(),
-                Title = movies.Favorites.Select(n => n.Movies.Title).ToList(),
-                Poster = movies.Favorites.Select(n => n.Movies.Poster).ToList()
+                ImdbId = movies.Favorites.Select(n => n.ImdbId).ToArray().ToList(),
+                Title = movies.Favorites.Select(n => n.Movies.Title).ToArray().ToList(),
+                Poster = movies.Favorites.Select(n => n.Movies.Poster).ToArray().ToList()
 
             }).FirstOrDefaultAsync();
 
 
-            return user;
+            return Ok(user);
         }
 
         [Authorize]
