@@ -109,7 +109,7 @@ namespace MyMoviesBackend.Controllers
             try
             {
                 _lists.DeleteUsersListsById(id);
-                return Ok("Success");
+                return Ok();
             }
             catch (Exception ex)
             {
