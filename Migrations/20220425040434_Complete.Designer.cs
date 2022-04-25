@@ -10,7 +10,7 @@ using MyMoviesBackend.Models;
 namespace MyMoviesBackend.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20220419063605_Complete")]
+    [Migration("20220425040434_Complete")]
     partial class Complete
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -160,6 +160,9 @@ namespace MyMoviesBackend.Migrations
 
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
+
+                    b.Property<string>("Admin")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
@@ -324,6 +327,9 @@ namespace MyMoviesBackend.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Genre")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ImdbId")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Plot")

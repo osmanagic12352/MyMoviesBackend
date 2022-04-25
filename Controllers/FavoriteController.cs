@@ -99,7 +99,7 @@ namespace MyMoviesBackend.Controllers
             try
             {
                 _favorite.DeleteFavorite(id);
-                return Ok("Success");
+                return Ok();
             }
             catch (Exception ex)
             {
