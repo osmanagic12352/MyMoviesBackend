@@ -29,7 +29,7 @@ namespace MyMoviesBackend.Controllers
         [Route("login")]
         public async Task<IActionResult> Login([FromBody] Login login)
         {
-            var UserCheck = await _userManager.FindByNameAsync(login.Email);
+            var UserCheck = await _userManager.FindByNameAsync(login.Username);
             if (UserCheck != null && await _userManager.CheckPasswordAsync(UserCheck, login.Password))
             {
                 var userRoles = await _userManager.GetRolesAsync(UserCheck);

@@ -92,6 +92,7 @@ namespace MyMoviesBackend.Controllers.Service
                 UserName = userView.UserName,
                 Email = userView.Email,
                 FullName = userView.FullName,
+                Admin = "NE",
                 SecurityStamp = Guid.NewGuid().ToString()
             };
             var result = await _userManager.CreateAsync(user, userView.Password);
@@ -126,7 +127,8 @@ namespace MyMoviesBackend.Controllers.Service
             {
                 UserName = adminView.UserName,
                 Email = adminView.Email,
-                FullName = adminView.FullName,               
+                FullName = adminView.FullName,
+                Admin = "DA",
                 SecurityStamp = Guid.NewGuid().ToString()
             };
 

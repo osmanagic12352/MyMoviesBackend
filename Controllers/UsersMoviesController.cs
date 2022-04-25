@@ -53,6 +53,7 @@ namespace MyMoviesBackend.Controllers
                 _movie = new UsersMovies()
                 {
                     Title = movie.Title,
+                    ImdbId = movie.ImdbId,
                     Poster = movie.Poster,
                     Plot = movie.Plot,
                     Genre = movie.Genre,
@@ -62,7 +63,7 @@ namespace MyMoviesBackend.Controllers
                 };
                 _context.DbUsersMovies.Add(_movie);
                 _context.SaveChanges();
-                return Ok("Success");
+                return Ok();
             }
             else
             {
@@ -79,9 +80,8 @@ namespace MyMoviesBackend.Controllers
             return Ok(usersM);
         }
 
-        [Authorize(Roles = "Admin")]
         [HttpGet]
-        [Route("getAllUsers")]
+        [Route("getAllUsersMovies")]
         public IActionResult GetAllUsersMovies()
         {
             var allmovies = _movie.GetAllUsersMovies();
@@ -109,13 +109,13 @@ namespace MyMoviesBackend.Controllers
 
         [Authorize]
         [HttpDelete]
-        [Route("deleteUser_ById/{id}")]
+        [Route("deleteUsersMovie_ById/{id}")]
         public IActionResult DeleteUsersMovieById(int id)
         {
             try
             {
                 _movie.DeleteUsersMovieById(id);
-                return Ok("Success");
+                return Ok();
             }
             catch (Exception ex)
             {

@@ -96,7 +96,8 @@ namespace MyMoviesBackend.Controllers
                 user.Id,
                 user.Email,
                 user.UserName,
-                user.FullName
+                user.FullName,
+                user.Admin
             };
         }
 
@@ -125,6 +126,29 @@ namespace MyMoviesBackend.Controllers
                 return BadRequest(ex.ToString());
             }
 
+        }
+
+        [Authorize]
+        [HttpPut("UpdateUser")]
+        public async Task<IActionResult> UpdateUser(AppUser userView, string password)
+        {
+            string userId = User.Claims.First(a => a.Type == "UserID").Value;
+            var _user = await _userManager.FindByIdAsync(userId);
+            if (_user != null)
+            {
+                _user.UserName = userView.UserName;
+                _user.Email = userView.Email;
+                _user.FullName = userView.FullName;
+                _user.PasswordHash = _passwordHasher.HashPassword(_user, password);
+
+                var result = await _userManager.UpdateAsync(_user);
+                return Ok(result);
+            }
+            else
+            {
+                throw new Exception("Greška! Niste unjeli dobar Id usera?");
+
+            }
         }
 
         [Authorize(Roles = "Admin")]

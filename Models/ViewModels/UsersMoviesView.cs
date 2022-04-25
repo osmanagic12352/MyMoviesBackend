@@ -13,6 +13,8 @@ namespace MyMoviesBackend.Models.ViewModels
         [Required]
         public string Poster { get; set; }
         [Required]
+        public string ImdbId { get; set; }
+        [Required]
         public string Plot { get; set; }
         [Required]
         public string Released { get; set; }

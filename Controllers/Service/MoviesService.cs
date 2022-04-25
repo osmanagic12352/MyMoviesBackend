@@ -30,6 +30,8 @@ namespace MyMoviesBackend.Controllers.Service
             {
                 ImdbId = movie.ImdbId,
                 Title = movie.Title,
+                Plot = movie.Plot,
+                Genre = movie.Genre,
                 Poster = movie.Poster,
                 Released = movie.Released,
                 Runtime = movie.Runtime,
@@ -50,6 +52,12 @@ namespace MyMoviesBackend.Controllers.Service
         {
             var allMovies = _context.DbMovies.ToList();
             return allMovies;
+        }
+
+        public Movies GetMovieById(string Id)
+        {
+            var GetUser = _context.DbMovies.FirstOrDefault(n => n.ImdbId == Id);
+            return GetUser;
         }
 
         public Movies UpdateMovieById(string Id, MoviesView movieView)

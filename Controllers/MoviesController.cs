@@ -46,13 +46,20 @@ namespace MyMoviesBackend.Controllers
             }
         }
 
-        [Authorize(Roles = "Admin")]
         [HttpGet]
-        [Route("getAllUsers")]
+        [Route("getAllMovies")]
         public IActionResult GetAllMovies()
         {
             var allmovies = _movie.GetAllMovies();
             return Ok(allmovies);
+        }
+
+        [HttpGet]
+        [Route("getMovie_ById/{id}")]
+        public IActionResult GetMovieById(string id)
+        {
+            var GetUser = _movie.GetMovieById(id);
+            return Ok(GetUser);
         }
 
 
@@ -82,7 +89,7 @@ namespace MyMoviesBackend.Controllers
             try
             {
                 _movie.DeleteMovieById(id);
-                return Ok("Success");
+                return Ok();
             }
             catch (Exception ex)
             {

@@ -7,6 +7,7 @@ namespace MyMoviesBackend.Models
     public class AppUser : IdentityUser<int>
     {
         public string FullName { get; set; }
+        public string Admin { get; set; }
 
 
         //Relacija N:N - više filmova, od više usera, u favoritima
